@@ -1,0 +1,68 @@
+
+/* ---------- form */
+
+#form{
+    /* background-color: rgba(255,255,255,.32);  */
+    /* backdrop-filter: blur(5px); */
+    padding:8px;
+    color:white;
+}
+.data{
+    width: 100%;
+    min-height: 20px;
+}
+#form textarea{
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 25px;
+    height: 55px;
+    /* background-color: rgba(255,255,255,.42);  */
+
+    background-color: rgba(0,0,0,.22); 
+    outline: none;
+    padding:3px;
+    /* color : white; */
+    color:rgb(255, 255, 255);
+}
+
+.formButton{
+    margin-top: 4px;
+    position: absolute;
+    right: 0px;
+    height: 30px;
+    width: 120px;
+    background-color: rgba(255,255,255,.32); 
+    border: 0px solid;
+    transition: .2s;
+    color:rgb(46, 41, 41);
+}
+.formButton:hover{
+    background-color: rgba(100,100,100,.22); 
+}
+.formButton:active{
+    background-color: rgba(255,255,255,.52); 
+}
+
+.buttonDiv{
+    position: relative;
+    height: 35px;
+
+}
+
+.Media{
+    overflow: auto;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.slide{
+    position: relative;
+    display: flex;
+}
+.formMedia{
+    /* min-width: 100%; */
+    margin:0px 20px 0px 20px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+}
+/* =============== */

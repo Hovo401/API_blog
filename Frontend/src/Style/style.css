@@ -1,0 +1,115 @@
+*{
+    padding:0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: "Gill Sans", sans-serif;
+}
+html, body {
+    height: 100%;
+}
+body{
+    padding-top: 40px;
+    background: rgb(14,128,113);
+    background: linear-gradient(324deg, rgba(14,128,113,1) 0%, rgba(147,109,95,1) 100%);
+}
+header{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 40px;
+    background-color: #4b625f;
+    padding-right: 20px;
+    font-family: "Gill Sans", sans-serif;
+    z-index: 99;
+}
+main{
+    min-width: 240px;
+    max-width: 85%;
+    margin :auto;
+}
+
+.head_button{
+    height :100%;
+    /* padding:0px 30px 0px 30px ; */
+    width: 98px;
+
+    background-color: rgba(0,0,0,0);
+    border:0px;
+
+    color : #fff;
+    font-size: 16px;
+    /* font-family: 'Shantell Sans', cursive; */
+    margin-right: 10px;
+
+    transition: .2s;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+            user-select: none; 
+}
+
+.head_button:hover{
+    background-color: rgba(0,0,0,.4);
+}
+
+.head_button:active{
+    background-color: rgba(255,255,255,.3);
+}
+
+/* --- window,  panel */
+
+#window{
+    z-index: 100;
+    position : fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,.1);
+    
+    backdrop-filter: blur(12px);
+}
+.panel{
+    position: absolute;
+    top: 50%;                        
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 400px;
+    height: 400px;
+
+    border-radius: 10px;
+    background-color: rgba(255,255,255,.32);
+    /* backdrop-filter: blur(15px); */
+    padding:10px;
+
+    text-align: center;
+}
+.panel h3{
+    color:#2d3534;
+}
+.panel input{
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+    height: 40px;
+    border-radius: 5px;
+    border:1px solid;
+    text-align: center;
+    outline: none;
+    font-size: 18px;
+    user-select: none;
+
+    background-color: rgba(255,255,255,.32);
+    backdrop-filter: blur(5px);
+}
+
+/* ============== */
+
+.textVerticalCentre{
+    margin: 0;
+    position: absolute;               /* 2 */
+    top: 50%;                         /* 3 */
+    transform: translate(0, -50%) 
+}
+
