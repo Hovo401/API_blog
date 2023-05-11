@@ -1,18 +1,21 @@
 import LogIn from './PanelComponents/LogIn';
 import SignUp from './PanelComponents/SignUp';
+import PostUpdate  from './PanelComponents/PostUpdate';
 
 function panelRenderSwitch({ rendringName, setPanelState }) {
     switch (rendringName) {
         case 'LogIn':
             return (
                 <LogIn setPanelState={setPanelState} />
-            )
-            break;
+            );
         case 'SignUp':
             return (
                 <SignUp setPanelState={setPanelState} />
-            )
-            break;
+            );
+        case 'PostUpdate':
+            return (
+                <PostUpdate setPanelState={setPanelState} />
+            );
         default:
             return (<></>)
     }

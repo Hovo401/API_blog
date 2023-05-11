@@ -18,6 +18,7 @@ function Header(){
 
                     <button onClick={ ()=>{ setPanelState('LogIn') } } 
                     class="head_button">Log In</button>
+
                 </div>
         </header>
         </>
