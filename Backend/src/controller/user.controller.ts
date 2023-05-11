@@ -16,7 +16,7 @@ class UserContreoller {
         if (!checkPassword) { throw [401, 'wrong password']}
 
         const tokin = await jwtTokin.creatToken(user?.id);
-        res.cookie('Authorization', tokin);
+        res.cookie('Authorization', tokin, { httpOnly: true });
         throw [200, '', {tokin, user: { userId: user?.id, nickname: user?.nickname }}]
     }
     private async generateHash(password: string) {

@@ -2,11 +2,11 @@ import LogIn from './PanelComponents/LogIn';
 import SignUp from './PanelComponents/SignUp';
 import PostUpdate  from './PanelComponents/PostUpdate';
 
-function panelRenderSwitch({ rendringName, setPanelState }) {
+function panelRenderSwitch({ rendringName, setPanelState, setUserConfig}) {
     switch (rendringName) {
         case 'LogIn':
             return (
-                <LogIn setPanelState={setPanelState} />
+                <LogIn setUserConfig={setUserConfig} setPanelState={setPanelState} />
             );
         case 'SignUp':
             return (
@@ -26,11 +26,11 @@ function closePanel(setPanelState, e) {
     }
 }
 
-function PanelRender({ rendringName, setPanelState }) {
+function PanelRender({ rendringName, setPanelState, setUserConfig }) {
     if (rendringName) {
         return (
             <div onClick={(e) => closePanel(setPanelState, e)} id='window' className='closeWindow'>
-                {panelRenderSwitch({ rendringName, setPanelState })}
+                {panelRenderSwitch({ rendringName, setPanelState, setUserConfig })}
             </div>
         )
     }

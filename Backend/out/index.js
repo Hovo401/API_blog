@@ -12,6 +12,12 @@ const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT) || 3001;
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'authorization, Content-Type');
+    next();
+});
 app.use('/api', api_routes_1.default);
 try {
     app.listen(PORT, () => {

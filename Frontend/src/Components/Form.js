@@ -1,5 +1,11 @@
+import {axiosReq} from '../Moduls/axiosReq.js';
+import React, {useState, useEffect} from 'react';
 import form from '../Style/form.css'
-function Form (){
+
+function Form ({setPanelState}){
+    const [textarea, setTextarea] = useState('');
+    // const [password, setPassword] = useState('');
+
     return (
         <div id='form' style={form}>
             <div className='Media'>
@@ -12,11 +18,23 @@ function Form (){
             </div>
             <input className='' type="file"></input>
             <br/><br/>
-            <textarea ></textarea>
+            <textarea value={textarea} onChange={ e=> setTextarea(e.target.value) }></textarea>
             <div class='buttonDiv'>
                 <input className='formButton' type='submit'></input>
             </div>            
         </div>
     )
+    function loginReq(nickname, password){
+        axiosReq.post('/api/login', {
+            "nickname": nickname,
+            "password": password
+          })
+        .then(response => {
+            if(!response.data?.error){
+                setPanelState('')
+            }
+          console.log(response.data?.body)
+        })
+    }
 }
 export default Form

@@ -30,7 +30,7 @@ class UserPostContreoller {
         if (isNaN(req_post_id)) { throw [400, 'wrong post_id']; }
 
         const posts = await postsBdController.getPostByPost_id(req_post_id);
-        if (!posts) { throw [204]; }
+        if (!posts) { throw [204] }
         throw [200, '', {posts}];
     }
 

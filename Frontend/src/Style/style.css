@@ -89,7 +89,7 @@ main{
 .panel h3{
     color:#2d3534;
 }
-.panel input{
+.panel .forminput{
     width: 100%;
     margin: 10px 0px 10px 0px;
     height: 40px;

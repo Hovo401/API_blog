@@ -4,12 +4,20 @@ import db from './bd';
 class Db_posts {
     async getPosts(start: number = 0, max: number = Infinity): Promise<any> {
         const query = await
-            db.query(`SELECT * FROM posts LIMIT $1 OFFSET $2;`, [max, start]);
+            db.query(`SELECT posts.*, users.nickname
+            FROM posts
+            INNER JOIN users ON posts.user_id = users.id
+            OFFSET $2
+            LIMIT $1`, [max, start]);
        return query.rows;
     }
     async getPostByPost_id(post_id: number): Promise<any> {
         const query = await
-            db.query(`SELECT * FROM posts WHERE post_id = $1 `, [post_id]);
+            db.query(`SELECT posts.*, users.nickname
+            FROM posts
+            INNER JOIN users ON posts.user_id = users.id
+            WHERE posts.post_id = $1`, [post_id]);
+
        return query.rows[0];
     }
     async getPostsByUser_id(user_id: number): Promise<any> {

@@ -19,6 +19,7 @@ const users_bd_controller_1 = __importDefault(require("../moduls/Db/users.bd.con
 class UserContreoller {
     login(nickname, password, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(res);
             if (!nickname || !password) {
                 throw [401, 'wrong login || password'];
             }
@@ -31,7 +32,7 @@ class UserContreoller {
                 throw [401, 'wrong password'];
             }
             const tokin = yield jwt_token_modul_1.default.creatToken(user === null || user === void 0 ? void 0 : user.id);
-            res.cookie('Authorization', tokin);
+            res.cookie('Authorization', tokin, { httpOnly: true });
             throw [200, '', { tokin, user: { userId: user === null || user === void 0 ? void 0 : user.id, nickname: user === null || user === void 0 ? void 0 : user.nickname } }];
         });
     }

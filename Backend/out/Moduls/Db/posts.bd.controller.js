@@ -16,13 +16,20 @@ const bd_1 = __importDefault(require("./bd"));
 class Db_posts {
     getPosts(start = 0, max = Infinity) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield bd_1.default.query(`SELECT * FROM posts LIMIT $1 OFFSET $2;`, [max, start]);
+            const query = yield bd_1.default.query(`SELECT posts.*, users.nickname
+            FROM posts
+            INNER JOIN users ON posts.user_id = users.id
+            OFFSET $2
+            LIMIT $1`, [max, start]);
             return query.rows;
         });
     }
     getPostByPost_id(post_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield bd_1.default.query(`SELECT * FROM posts WHERE post_id = $1 `, [post_id]);
+            const query = yield bd_1.default.query(`SELECT posts.*, users.nickname
+            FROM posts
+            INNER JOIN users ON posts.user_id = users.id
+            WHERE posts.post_id = $1`, [post_id]);
             return query.rows[0];
         });
     }
