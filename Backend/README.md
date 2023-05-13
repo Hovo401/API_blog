@@ -130,3 +130,114 @@
      }
      ```
 
+---
+
+7. **GET /getPostsByUserId**
+
+Описание: Возвращает список постов пользователя по указанному идентификатору пользователя.
+
+Параметры запроса:
+- user_id (обязательный): Идентификатор пользователя.
+
+Успешный ответ:
+```json
+{
+  "error": false,
+  "message": "",
+  "body": {
+    "posts": [
+      {
+        "post_id": 1,
+        "user_id": 123,
+        "message": "Hello world!",
+        "media_message": "example.jpg",
+        "created_at": "2023-05-13T12:00:00Z",
+        "updated_at": "2023-05-13T12:30:00Z"
+      },
+      {
+        "post_id": 2,
+        "user_id": 123,
+        "message": "Another post",
+        "media_message": null,
+        "created_at": "2023-05-13T13:00:00Z",
+        "updated_at": "2023-05-13T13:30:00Z"
+      }
+    ]
+  }
+}
+```
+
+---
+
+8. **GET /getPostByPost_id**
+
+Описание: Возвращает информацию о посте по указанному идентификатору поста.
+
+Параметры запроса:
+- post_id (обязательный): Идентификатор поста.
+
+Успешный ответ:
+```json
+{
+  "error": false,
+  "message": "",
+  "body": {
+    "post": {
+      "post_id": 1,
+      "user_id": 123,
+      "message": "Hello world!",
+      "media_message": "example.jpg",
+      "created_at": "2023-05-13T12:00:00Z",
+      "updated_at": "2023-05-13T12:30:00Z"
+    }
+  }
+}
+```
+
+---
+
+9. **GET /getPostLength**
+
+Описание: Возвращает общее количество постов.
+
+Успешный ответ:
+```json
+{
+  "error": false,
+  "message": "",
+  "body": {
+    "Length": 100
+  }
+}
+```
+
+---
+
+10. **POST /createPost**
+
+Описание: Создает новый пост.
+
+Тело запроса:
+- message (обязательное): Текст сообщения поста.
+- file (опционально): Файл (изображение, видео и т. д.), прикрепленный к посту.
+
+Успешный ответ:
+```json
+{
+  "error": false,
+  "message": "Post successfully created",
+  "body": {
+    "post": {
+      "post_id": 101,
+      "user_id": 123,
+      "message": "New post",
+      "media_message": "example.jpg",
+      "created_at": "2023-05-13T14:00:00Z",
+      "updated_at": "2023-05-13T14:00:00Z"
+    }
+  }
+}
+```
+
+---
+
