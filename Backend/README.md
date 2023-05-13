@@ -1,136 +1,144 @@
-API Documentation
-This document provides an overview of the available endpoints, their descriptions, request parameters, and response formats for a specific API.
+Документация к эндпоинтам:
 
-POST /login
-Description: Authenticate a user using their nickname and password. Returns an authorization token, which is saved in a cookie.
+1. **POST /login**
 
-Request Parameters:
+   Описание: Аутентификация пользователя по его логину и паролю. Возвращает токен авторизации, который сохраняется в cookie.
 
-nickname (string): User's nickname.
-password (string): User's password.
-Response:
+   Параметры запроса (в теле запроса в формате JSON):
+   - nickname (string): Логин пользователя.
+   - password (string): Пароль пользователя.
 
-200 OK: Authentication successful. Returns an authorization token and user information.
-401 Unauthorized: Authentication failed. Invalid nickname or password.
-POST /signup
-Description: Register a new user.
+   Ответ:
+   - 200 OK: Аутентификация успешна. Возвращает токен авторизации и информацию о пользователе.
+   - 401 Unauthorized: Ошибка аутентификации. Неправильный логин или пароль.
 
-Request Parameters:
+2. **POST /signup**
 
-nickname (string): New user's nickname.
-password (string): New user's password.
-Response:
+   Описание: Регистрация нового пользователя.
 
-200 OK: Registration successful. Returns an authorization token and user information.
-226 IM Used: Nickname already used by another user.
-400 Bad Request: Invalid input data.
-POST /checkToken
-Description: Check the validity of an authorization token.
+   Параметры запроса (в теле запроса в формате JSON):
+   - nickname (string): Логин нового пользователя.
+   - password (string): Пароль нового пользователя.
 
-Request Parameters: None
+   Ответ:
+   - 200 OK: Регистрация успешна. Возвращает токен авторизации и информацию о пользователе.
+   - 226 IM Used: Логин занят другим пользователем.
+   - 400 Bad Request: Ошибка входных данных.
 
-Response:
+3. **POST /checkToken**
 
-200 OK: Token is valid. Returns user information.
-401 Unauthorized: Authorization failed. Token is invalid or missing.
-GET /getUsers
-Description: Get a list of all users (for development purposes).
+   Описание: Проверка валидности токена авторизации.
 
-Request Parameters: None
+   Параметры запроса: Не требуется.
 
-Response:
+   Ответ:
+   - 200 OK: Токен валиден. Возвращает информацию о пользователе.
+   - 401 Unauthorized: Ошибка авторизации. Токен недействителен или отсутствует.
 
-200 OK: Request successful. Returns a list of users.
-GET /getOneUser
-Description: Get information about a specific user by their ID or nickname.
+4. **GET /getUsers**
 
-Request Parameters:
+   Описание: Получение списка всех пользователей (для разработки).
 
-id (number, optional): User's ID.
-nickname (string, optional): User's nickname.
-Response:
+   Параметры запроса: Не требуется.
 
-200 OK: Request successful. Returns user information.
-400 Bad Request: Invalid request. Missing parameters id or nickname.
-404 Not Found: User not found.
-GET /getPosts
-Description: Get a list of all posts.
+   Ответ:
+   - 200 OK: Запрос выполнен успешно. Возвращает список пользователей.
 
-Request Parameters:
+5. **GET /getOneUser**
 
-start (number, optional): Starting index for pagination.
-max (number, optional): Maximum number of posts to retrieve.
-Response:
+   Описание: Получение информации о конкретном пользователе по его идентификатору или логину.
 
-200 OK: Request successful. Returns a list of posts.
-204 No Content: Empty list of posts.
-GET /getPostsByUserId
-Description: Get a list of posts by a user based on their ID.
+   Параметры запроса:
+   - id (number, опционально): Идентификатор пользователя.
+   - nickname (string, опционально): Логин пользователя.
 
-Request Parameters:
+   Ответ:
+   - 200 OK: Запрос выполнен успешно. Возвращает информацию о пользователе.
+   - 400 Bad Request: Ошибка запроса. Не указаны параметры id или nickname.
+   - 404 Not Found: Пользователь не найден.
 
-user_id (number): User's ID.
-Response:
+6. **GET /getPosts**
 
-200 OK: Request successful. Returns a list of posts by the user.
-204 No Content: Empty list of posts.
-GET /getPostByPost_id
-Description: Get information about a specific post by its ID.
+   Описание: Получение списка всех постов.
 
-Request Parameters:
+   Параметры запроса:
+   - start (number, опционально): Начальный индекс для пагинации.
+   - max (number, опционально): Максимальное количество постов для получения.
 
-post_id (number): Post's ID.
-Response:
+   Ответ:
+   - 200 OK: Запрос выполнен успешно. Возвращает список постов.
+   - 204 No Content: Список постов пуст.
 
-200 OK: Request successful. Returns post information.
-204 No Content: Post not found.
-GET /getPostLength
-Description: Get the total number of posts.
+7. **GET /getPostsByUserId**
 
-Request Parameters: None
+   Описание: Получение списка постов пользователя по его идентификатору.
 
-Response:
+   Параметры запроса:
+- user_id (number): Идентификатор пользователя, чьи посты необходимо получить.
 
-200 OK: Request successful. Returns the total count of posts.
-POST /createPost
-Description: Create a new post.
+   Ответ:
+   - 200 OK: Запрос выполнен успешно. Возвращает список постов пользователя.
+   - 204 No Content: Список постов пуст.
 
-Request Parameters:
+8. **GET /getPostByPost_id**
 
-message (string): Text of the post.
-Response:
+   Описание: Получение информации о конкретном посте по его идентификатору.
 
-200 OK: Post created successfully. Returns information about the created post.
-204 No Content: Failed to create the post.
-PUT /updatePost/:post_id
-Description: Update information of an existing post.
+   Параметры запроса:
+   - post_id (number): Идентификатор поста.
 
-Request Parameters:
+   Ответ:
+   - 200 OK: Запрос выполнен успешно. Возвращает информацию о посте.
+   - 204 No Content: Пост не найден.
 
-post_id (number): ID of the post to be updated.
-message (string, optional): New text of the post (optional).
+9. **GET /getPostLength**
 
-Response:
+   Описание: Получение количества всех постов.
 
-200 OK: Post updated successfully. Returns information about the updated post.
-204 No Content: Failed to update the post.
-DELETE /post/:post_id
-Description: Delete an existing post.
+   Параметры запроса: Не требуется.
 
-Request Parameters:
+   Ответ:
+   - 200 OK: Запрос выполнен успешно. Возвращает количество всех постов.
 
-post_id (number): ID of the post to be deleted.
-Response:
+10. **POST /createPost**
 
-200 OK: Post deleted successfully.
-204 No Content: Failed to delete the post.
-All other routes
-Description: Handles all other requests that do not match the defined endpoints.
+    Описание: Создание нового поста.
 
-Response:
+    Параметры запроса:
+    - message (string): Текст сообщения поста.
 
-404 Not Found: Route not found.
-Please note that this documentation provides an overview of the main endpoints, 
-their functionality, and request/response details within the given code. 
-For comprehensive documentation, it is necessary to provide a detailed description of all request parameters, 
-possible errors, and the structure of the data used in requests and responses.
+    Ответ:
+    - 200 OK: Пост успешно создан. Возвращает информацию о созданном посте.
+    - 204 No Content: Не удалось создать пост.
+
+11. **PUT /updatePost/:post_id**
+
+    Описание: Обновление информации о существующем посте.
+
+    Параметры запроса:
+    - post_id (number): Идентификатор поста, который требуется обновить.
+    - message (string): Новый текст сообщения поста (опционально).
+
+    Ответ:
+    - 200 OK: Пост успешно обновлен. Возвращает информацию о обновленном посте.
+    - 204 No Content: Не удалось обновить пост.
+
+12. **DELETE /post/:post_id**
+
+    Описание: Удаление существующего поста.
+
+    Параметры запроса:
+    - post_id (number): Идентификатор поста, который требуется удалить.
+
+    Ответ:
+    - 200 OK: Пост успешно удален.
+    - 204 No Content: Не удалось удалить пост.
+
+13. **All other routes**
+
+    Описание: Обработка всех остальных запросов, которые не совпадают с определенными эндпоинтами.
+
+    Ответ:
+    - 404 Not Found: Маршрут не найден.
+
+Это описание основных эндпоинтов и их функциональности в представленном коде. Однако, для полной документации требуется описать все параметры запросов, возможные ошибки и возвращаемые значения более подробно, а также описать структуру данных, используемых в запросах и ответах.
