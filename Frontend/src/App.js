@@ -1,51 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './Components/Header.js';
 import Form from './Components/Form.js';
 import PostList from './Components/PostList/PostList.js';
 import PanelRender from './Components/Panel/PanelRendr.js';
-import {axiosReq} from './Moduls/axiosReq.js';
+
+import {baseURL} from './Moduls/axiosReq.js';
 import axios from 'axios'
+
+
 
 function App() {
     const [panelState, setPanelState] = useState(null);
-    const [userConfig, setUserConfig] = useState({user_id: -1, nickname:'Unauthorized'});
+    const [userConfig, setUserConfig] = useState({user_id: -1, nickname:'Unauthorized',newOpen:true});
 
-    // axiosReq.post({
-    //     method: 'post',
-    //     url: '/api/checkTokin',
-    //     headers:{
-    //         Authorization:localStorage.getItem('Authorization')
-    //     },
-    //   })
-    fetch('http://localhost:3001/api/checkTokin',{
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": localStorage.getItem('Authorization')
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    
-    
-}).then((e)=>{
-    console.log(e)
-})
-    
-
-      
-    let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:3001/api/checkTokin',
-        headers: { 
-            Authorization:localStorage.getItem('Authorization')
-        }
-      };
-      
-      axios.request(config)
-      .then((e)=>{
-        
-        console.log(e)
-      })
+    if(userConfig.newOpen){
+        axios({
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: baseURL+'api/checkTokin',
+            headers: { 
+                Authorization:localStorage.getItem('Authorization')
+            }
+        })
+        .then((e)=>{
+            if(!e?.data?.error){
+                setUserConfig(e?.data?.body.user )
+            }
+        })
+    }
 
     return (
         <>  
@@ -53,7 +35,8 @@ function App() {
             <Header userConfig={userConfig} panelState={panelState} setPanelState={setPanelState}/>
             <main>
                 <Form setPanelState={setPanelState}/>
-                <PostList setPanelState={setPanelState}/>
+                <PostList userConfig={userConfig} setPanelState={setPanelState}/>
+                <></>
             </main>
         </>
     )

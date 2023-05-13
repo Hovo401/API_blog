@@ -8,10 +8,16 @@ html, body {
     height: 100%;
 }
 body{
+    
+    background-position:0%;
     padding-top: 40px;
     background: rgb(14,128,113);
     background: linear-gradient(324deg, rgba(14,128,113,1) 0%, rgba(147,109,95,1) 100%);
+    background-attachment: fixed;
+    background-repeat:no-repeat;
+    background-position:0px 0px;
 }
+
 header{
     position: fixed;
     top: 0px;

@@ -1,10 +1,11 @@
 import {axiosReq} from '../../../Moduls/axiosReq.js';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 
 export default function LogIn({setPanelState, setUserConfig}){
     const [Login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
     return(
         <div style={style.panel} class='panel'>
@@ -13,8 +14,9 @@ export default function LogIn({setPanelState, setUserConfig}){
 
             <h3>Password</h3>
             <input value={password} onChange={ e=> setPassword(e.target.value) } className="forminput" type='password'></input>
+            <p>{message}</p>
             <input onClick={()=>{loginReq( Login, password )}} className="forminput" style={style.cursorPpointer} type='submit' value='Вход'></input>
-            <a onClick={ ()=>setPanelState('SignUp') } style={style.cursorPpointer}>Забыли пароль?</a>
+            <a onClick={ ()=>setPanelState('SignUp') } style={style.cursorPpointer}>SignUp</a>
         </div>
     )
     function loginReq(nickname, password){
@@ -27,9 +29,17 @@ export default function LogIn({setPanelState, setUserConfig}){
             if(!response.data?.error){
                 setPanelState('');
                 localStorage.setItem('Authorization', response?.data.body?.tokin);
-                setUserConfig({user_id:response.data?.body.user_id, nickname: nickname})
-                console.log(response.data)
+                setUserConfig({
+                    user_id: response?.data?.body?.user?.user_id || -1, 
+                    nickname: response?.data?.body?.user?.nickname || 'Unauthorized'
+                });
+                console.log(response?.data?.body?.user)
+            }else if(response?.data?.error == true){
+                setMessage(response?.data?.message)
             }
+        }).catch((e)=>{
+            setMessage(e?.response?.data?.message)
+            console.log(e?.response?.data?.message)
         })
     }
 }

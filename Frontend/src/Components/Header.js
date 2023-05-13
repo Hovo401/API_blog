@@ -7,7 +7,6 @@ function Header({panelState, setPanelState, userConfig}) {
 
     return (
         <>
-            
             <header style={css}>
                 <div style={style.leftBlock} className='hedad_left textVerticalCentre'>
                     <p className='textVerticalCentre'>{userConfig.nickname}</p>
@@ -20,8 +19,6 @@ function Header({panelState, setPanelState, userConfig}) {
                     <button onClick={() => { setPanelState('LogIn') }}
                         class="head_button">Log In</button>
 
-                    <button onClick={() => { setPanelState('PostUpdate') }}
-                        class="head_button">Log In</button>
 
                 </div>
             </header>

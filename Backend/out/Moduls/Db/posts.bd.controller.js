@@ -19,6 +19,7 @@ class Db_posts {
             const query = yield bd_1.default.query(`SELECT posts.*, users.nickname
             FROM posts
             INNER JOIN users ON posts.user_id = users.id
+            ORDER BY posts.post_id DESC
             OFFSET $2
             LIMIT $1`, [max, start]);
             return query.rows;
@@ -39,6 +40,12 @@ class Db_posts {
             return query.rows;
         });
     }
+    getPostLength() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = yield bd_1.default.query(`SELECT COUNT(*) AS total_rows FROM posts;`);
+            return query.rows;
+        });
+    }
     createPost(user_id, message, media_message = '') {
         return __awaiter(this, void 0, void 0, function* () {
             const query = yield bd_1.default.query(`INSERT INTO posts (user_id, message, media_message) values ($1, $2, $3) RETURNING *`, [user_id, message, media_message]);
@@ -51,10 +58,22 @@ class Db_posts {
             return query.rows;
         });
     }
-    updatePost(post_id, message, media_message = '') {
+    updatePost({ post_id, message, media_message }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = yield bd_1.default.query(`UPDATE posts SET message = $2, media_message = $3 WHERE post_id = $1`, [post_id, message, media_message]);
-            return query.rows;
+            if (message && media_message) {
+                const query = yield bd_1.default.query(`UPDATE posts SET message = $2, media_message = $3 WHERE post_id = $1`, [post_id, message, media_message]);
+                // return query.rows;
+            }
+            else if (message && !media_message) {
+                const query = yield bd_1.default.query(`UPDATE posts SET message = $2 WHERE post_id = $1 `, [post_id, message]);
+                // return query.rows;
+            }
+            else if (!message && media_message) {
+                const query = yield bd_1.default.query(`UPDATE posts SET media_message = $2 WHERE post_id = $1 `, [post_id, media_message]);
+                // return query.rows;
+            }
+            const result = yield bd_1.default.query(`SELECT * FROM posts WHERE post_id = $1`, [post_id]);
+            return result.rows;
         });
     }
 }

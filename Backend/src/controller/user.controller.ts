@@ -10,7 +10,7 @@ class UserContreoller {
         if (!nickname || !password) { throw [401, 'wrong login || password'] }
 
         const user = await userBdController.getUserByNikName(nickname);
-        if (!user?.nickname) { throw [401, 'User ${nickname} is not registered'];}
+        if (!user?.nickname) { throw [401, `User (${nickname}) is not registered`];}
 
         const checkPassword = await bcrypt.compare(password, user?.hashpassword);
         if (!checkPassword) { throw [401, 'wrong password']}

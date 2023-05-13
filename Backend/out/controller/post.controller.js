@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const controller_starter_1 = __importDefault(require("./controller.starter"));
 const jwt_token_modul_1 = __importDefault(require("../moduls/Authentication/jwt.token.modul"));
 const posts_bd_controller_1 = __importDefault(require("../moduls/Db/posts.bd.controller"));
+const FileControl_1 = require("../moduls/FileControl");
+const path_1 = __importDefault(require("path"));
 class UserPostContreoller {
     getPosts(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -56,43 +58,82 @@ class UserPostContreoller {
             throw [200, '', { posts }];
         });
     }
-    postCreatePost(req, res) {
+    getPostLength(req, res) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
-            const { userId } = yield jwt_token_modul_1.default.Authorization(req);
-            if (userId == -1) {
-                throw [400, 'user is not authorized'];
-            }
-            const { message, media_message } = req.body;
-            if (!message) {
-                throw [400];
-            }
-            const posts = yield posts_bd_controller_1.default.createPost(Number(userId), message || '', media_message || '');
-            if (!posts) {
+            const Length = yield posts_bd_controller_1.default.getPostLength();
+            if (!((_a = Length[0]) === null || _a === void 0 ? void 0 : _a.total_rows)) {
                 throw [204];
             }
-            throw [200, 'post successfully created', { posts }];
+            throw [200, '', { Length: (_b = Length[0]) === null || _b === void 0 ? void 0 : _b.total_rows }];
+        });
+    }
+    postCreatePost(req, res, next) {
+        var _a, _b, _c, _d, _e;
+        return __awaiter(this, void 0, void 0, function* () {
+            const { userId } = yield jwt_token_modul_1.default.Authorization(req);
+            let message = '';
+            let media_message = '';
+            if ((_a = req.headers['content-type']) === null || _a === void 0 ? void 0 : _a.includes('multipart/form-data')) {
+                message = JSON.parse((_b = req.body) === null || _b === void 0 ? void 0 : _b.data).message;
+            }
+            else {
+                message = req.body.message;
+            }
+            if (!message) {
+                throw [400, 'Unable to save without a message'];
+            }
+            const post = yield posts_bd_controller_1.default.createPost(Number(userId), message || '', media_message || '');
+            const post_id = (_c = post[0]) === null || _c === void 0 ? void 0 : _c.post_id;
+            if (!post || !post_id) {
+                throw [204];
+            }
+            if ((_d = req.headers['content-type']) === null || _d === void 0 ? void 0 : _d.includes('multipart/form-data'), req.file) {
+                const media_message = yield (0, FileControl_1.addPostMedia)(req.file, userId, (_e = post[0]) === null || _e === void 0 ? void 0 : _e.post_id);
+                const postUpload = yield posts_bd_controller_1.default.updatePost({ post_id, media_message });
+            }
+            throw [200, 'Post successfully created', { post }];
         });
     }
     putUpdatePost(req, res) {
+        var _a, _b, _c, _d, _e;
         return __awaiter(this, void 0, void 0, function* () {
+            console.log((_a = req.headers['content-type']) === null || _a === void 0 ? void 0 : _a.includes('multipart/form-data'));
             const { userId } = yield jwt_token_modul_1.default.Authorization(req);
             if (userId == -1) {
                 throw [400, 'user is not authorized'];
             }
-            const req_post_id = Number(req.params.post_id);
-            const { message, media_message } = req.body;
+            let message = '';
+            let media_message = '';
+            if ((_b = req.headers['content-type']) === null || _b === void 0 ? void 0 : _b.includes('multipart/form-data')) {
+                message = JSON.parse((_c = req.body) === null || _c === void 0 ? void 0 : _c.data).message;
+            }
+            else {
+                message = req.body.message;
+            }
             if (!message) {
                 throw [400];
             }
-            const { user_id } = yield posts_bd_controller_1.default.getPostByPost_id(req_post_id);
-            if (Number(user_id) !== userId) {
+            const req_post_id = Number(req.params.post_id);
+            const old_post = yield posts_bd_controller_1.default.getPostByPost_id(req_post_id);
+            const post_id = Number(old_post === null || old_post === void 0 ? void 0 : old_post.post_id);
+            if (old_post.user_id !== userId) {
                 throw [403, `you can't delete someone else's post `];
             }
-            const posts = yield posts_bd_controller_1.default.updatePost(req_post_id, message || '', media_message || '');
-            if (!posts) {
+            let newPost;
+            if ((_d = req.headers['content-type']) === null || _d === void 0 ? void 0 : _d.includes('multipart/form-data'), req.file) {
+                (0, FileControl_1.deleteFolder)(path_1.default.join('public', String(userId), String(req_post_id)));
+                media_message = yield (0, FileControl_1.addPostMedia)(req.file, userId, (_e = old_post[0]) === null || _e === void 0 ? void 0 : _e.post_id);
+                newPost = yield posts_bd_controller_1.default.updatePost({ post_id, media_message, message });
+            }
+            else {
+                newPost = yield posts_bd_controller_1.default.updatePost({ post_id, message });
+            }
+            // const old_post = await postsBdController.getPostByPost_id(req_post_id)
+            if (!newPost) {
                 throw [204];
             }
-            throw [200, 'post successfully updated', { posts }];
+            throw [200, 'post successfully updated', { post: newPost }];
         });
     }
     deletePost(req, res) {
@@ -105,9 +146,12 @@ class UserPostContreoller {
             if (isNaN(req_post_id)) {
                 throw [400];
             }
-            const { user_id } = yield posts_bd_controller_1.default.getPostByPost_id(req_post_id);
+            const { user_id, media_message } = yield posts_bd_controller_1.default.getPostByPost_id(req_post_id);
             if (Number(user_id) !== userId) {
                 throw [403, `you can't delete someone else's post  `];
+            }
+            if (media_message) {
+                (0, FileControl_1.deleteFolder)(path_1.default.join('public', String(userId), String(req_post_id)));
             }
             const posts = yield posts_bd_controller_1.default.deletePost(req_post_id);
             if (!posts) {

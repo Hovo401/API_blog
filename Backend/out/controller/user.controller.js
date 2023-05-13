@@ -19,13 +19,12 @@ const users_bd_controller_1 = __importDefault(require("../moduls/Db/users.bd.con
 class UserContreoller {
     login(nickname, password, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(res);
             if (!nickname || !password) {
                 throw [401, 'wrong login || password'];
             }
             const user = yield users_bd_controller_1.default.getUserByNikName(nickname);
             if (!(user === null || user === void 0 ? void 0 : user.nickname)) {
-                throw [401, 'User ${nickname} is not registered'];
+                throw [401, `User (${nickname}) is not registered`];
             }
             const checkPassword = yield bcrypt_1.default.compare(password, user === null || user === void 0 ? void 0 : user.hashpassword);
             if (!checkPassword) {

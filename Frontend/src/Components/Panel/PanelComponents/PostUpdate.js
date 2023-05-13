@@ -1,26 +1,61 @@
 
-function PostUpdate({ setPanelState }) {
+import React, { useState } from 'react';
+import { baseURL, axiosReq } from '../../../Moduls/axiosReq';
+
+
+
+function PostUpdate({ post_id, nickname, message, media_message, userConfig, setPanelState, panelState }) {
+    const [textarea, setTextarea] = useState(message);
+    const [selectedFile, setSelectedFile] = useState(null);
     return (
         <div style={style.panel} class='panel'>
-            <h3>Update</h3>
-            <div id='form'>
-                <div className='Media' > 
-                    <div className='slide' >
-                        <div className='formMedia' style={style.media}>
-                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyTjeJUaD3MswsasRaok9NP4VI9a6sWzTksQ&usqp=CAU'></img>
-                    </div>
+         <div id='form' >
+         {
+                media_message.length > 1 ?
+                    <div className='Media'>
+                        <div className='slide'>
 
-                    </div>
-                </div>
-                <input className='' type="file"></input>
-                <br /><br />
-                <textarea ></textarea>
-                <div class='buttonDiv'>
-                    <input className='formButton' type='submit'></input>
-                </div>
+                            {Array([...media_message])?.map(media => (
+                                <div className='formMedia'>
+                                    <img src={baseURL + media_message}></img>
+                                </div>
+                            ))}
+
+                        </div>
+                    </div> : ''
+            }
+            <input className='' onChange={handleFileChange} type="file"></input>
+            <br /><br />
+            <textarea value={textarea} onChange={e => setTextarea(e.target.value)}></textarea>
+            <div onClick={() => { updatePost()}} class='buttonDiv'>
+                <input className='formButton' type='submit'></input>
             </div>
         </div>
+    </div>
     )
+    function handleFileChange(event) {
+        setSelectedFile(event.target.files[0]);
+      }
+
+      function updatePost() {
+        const formData = new FormData();
+        formData.append('file', selectedFile); // Добавление выбранного файла
+
+        const jsonData = JSON.stringify( {
+            message: textarea,
+          });
+          
+        formData.append('data', jsonData);
+
+        axiosReq.put('api/updatePost/'+post_id,formData,{
+        headers: {
+            'Authorization': localStorage.getItem('Authorization'),
+            'Content-Type': 'multipart/form-data' // Используйте 'multipart/form-data' для отправки файлов
+            }
+        }).then((response) => {
+            setPanelState('')
+        })
+    }
 }
 export default PostUpdate;
 

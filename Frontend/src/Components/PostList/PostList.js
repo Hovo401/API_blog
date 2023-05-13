@@ -4,7 +4,7 @@ import Post from './Post.js';
 import {axiosReq} from '../../Moduls/axiosReq.js';
 
 
- function List({setPanelState}){
+ function List({setPanelState, userConfig}){
 
     const [posts, setPosts] = useState([]);
 
@@ -19,7 +19,7 @@ import {axiosReq} from '../../Moduls/axiosReq.js';
     return (
         <div style={post_list} id='list'>
           {posts?.map(post => (
-            <Post post_id={post.post_id} nickname={post.nickname} message={post.message} media_message={post.media_message} setPanelState={setPanelState} />
+            <Post userConfig={userConfig} post_id={post.post_id} nickname={post.nickname} message={post.message} media_message={post.media_message} setPanelState={setPanelState} />
           ))}
         </div>
       )

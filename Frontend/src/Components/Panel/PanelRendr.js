@@ -10,12 +10,9 @@ function panelRenderSwitch({ rendringName, setPanelState, setUserConfig}) {
             );
         case 'SignUp':
             return (
-                <SignUp setPanelState={setPanelState} />
+                <SignUp setUserConfig={setUserConfig} setPanelState={setPanelState} />
             );
-        case 'PostUpdate':
-            return (
-                <PostUpdate setPanelState={setPanelState} />
-            );
+
         default:
             return (<></>)
     }
@@ -29,7 +26,7 @@ function closePanel(setPanelState, e) {
 function PanelRender({ rendringName, setPanelState, setUserConfig }) {
     if (rendringName) {
         return (
-            <div onClick={(e) => closePanel(setPanelState, e)} id='window' className='closeWindow'>
+            <div onMouseDown={(e) => {closePanel(setPanelState, e)}} id='window' className='closeWindow'>
                 {panelRenderSwitch({ rendringName, setPanelState, setUserConfig })}
             </div>
         )
