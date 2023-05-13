@@ -327,7 +327,9 @@
 ```json
 {
   "error": false,
-  "message": "Post successfully deleted"
+  "message": "Post successfully deleted",
+  "body": {}
+
 }
 ```
 
