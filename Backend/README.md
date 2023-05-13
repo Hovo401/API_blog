@@ -3,14 +3,14 @@
 1. **POST /login**
    - Описание: Авторизация пользователя.
    - Тело запроса:
-     ```
+     ```json
      {
        "nickname": "string",
        "password": "string"
      }
      ```
    - Ответ:
-     ```
+     ```json
      {
        "error": false,
        "message": "",
@@ -27,14 +27,14 @@
 2. **POST /signup**
    - Описание: Регистрация нового пользователя.
    - Тело запроса:
-     ```
+     ```json
      {
        "nickname": "string",
        "password": "string"
      }
      ```
    - Ответ:
-     ```
+     ```json
      {
        "error": false,
        "message": "",
@@ -51,11 +51,11 @@
 3. **POST /checkToken**
    - Описание: Проверка валидности токена авторизации.
    - Заголовки запроса:
-     ```
+     ```json
      Authorization: "Bearer <токен>"
      ```
    - Ответ:
-     ```
+     ```json
      {
        "error": false,
        "message": "",
@@ -71,7 +71,7 @@
 4. **GET /getUsers** (только для разработчика)
    - Описание: Получение списка всех пользователей.
    - Ответ:
-     ```
+     ```json
      {
        "error": false,
        "message": "",
@@ -93,7 +93,7 @@
      - `id`: ID пользователя (number)
      - `nickname`: Никнейм пользователя (string)
    - Ответ:
-     ```
+     ```json
      {
        "error": false,
        "message": "",
@@ -112,7 +112,7 @@
      - `start`: Начальный индекс (number)
      - `max`: Максимальное количество постов (number)
    - Ответ:
-     ```
+     ```json
      {
        "error": false,
        "message": "",
