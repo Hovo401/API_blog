@@ -194,16 +194,14 @@
         "user_id": 123,
         "message": "Hello world!",
         "media_message": "example.jpg",
-        "created_at": "2023-05-13T12:00:00Z",
-        "updated_at": "2023-05-13T12:30:00Z"
+        "create_date": "2023-05-13T12:00:00Z"
       },
       {
         "post_id": 2,
         "user_id": 123,
         "message": "Another post",
         "media_message": null,
-        "created_at": "2023-05-13T13:00:00Z",
-        "updated_at": "2023-05-13T13:30:00Z"
+        "create_date": "2023-05-13T13:00:00Z"
       }
     ]
   }
@@ -230,8 +228,7 @@
       "user_id": 123,
       "message": "Hello world!",
       "media_message": "example.jpg",
-      "created_at": "2023-05-13T12:00:00Z",
-      "updated_at": "2023-05-13T12:30:00Z"
+      "create_date": "2023-05-13T12:00:00Z"
     }
   }
 }
@@ -278,8 +275,7 @@
       "user_id": 123,
       "message": "New post",
       "media_message": "example.jpg",
-      "created_at": "2023-05-13T14:00:00Z",
-      "updated_at": "2023-05-13T14:00:00Z"
+      "create_date": "2023-05-13T14:00:00Z"
     }
   }
 }
@@ -312,8 +308,7 @@
       "user_id": 123,
       "message": "Updated post",
       "media_message": "example.jpg",
-      "created_at": "2023-05-13T14:00:00Z",
-      "updated_at": "2023-05-13T15:30:00Z"
+      "create_date": "2023-05-13T14:00:00Z"
     }
   }
 }
