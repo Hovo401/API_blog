@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PostUpdate from '../Panel/PanelComponents/PostUpdate';
 import { baseURL, axiosReq } from '../../Moduls/axiosReq';
 
-function Post({ post_id, nickname, message, media_message, userConfig }) {
+function Post({ post_id, nickname, message, media_message, userConfig, handleDelete }) {
     const [panelState, setPanelState] = useState(null);
 
 
@@ -39,7 +39,7 @@ function Post({ post_id, nickname, message, media_message, userConfig }) {
                 nickname == userConfig.nickname ?
                     <>
                         <button class='bootonUploadPost' onClick={() => { setPanelState('true') }}>Update</button> 
-                        <button class='bootonDeletePost' onClick={() => { Delete(post_id) }}>Delete</button> 
+                        <button class='bootonDeletePost' onClick={() => { handleDelete(post_id) }}>Delete</button> 
                     </>: ''
             }
 
@@ -47,14 +47,14 @@ function Post({ post_id, nickname, message, media_message, userConfig }) {
 
     )
 
-    function Delete(post_id){
-        axiosReq.delete('api/post/'+post_id,{
-            headers: {
-                'Authorization': localStorage.getItem('Authorization')
-                }
-        }).then((response) => {
-        })
-    }
+    // function Delete(post_id){
+    //     axiosReq.delete('api/post/'+post_id,{
+    //         headers: {
+    //             'Authorization': localStorage.getItem('Authorization')
+    //             }
+    //     }).then((response) => {
+    //     })
+    // }
 }
 export default Post;
 

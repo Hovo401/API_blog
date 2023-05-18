@@ -27,7 +27,7 @@ class UserContreoller {
             resolve(hash);
           });
         });
-      }
+    }
 
     async postTokenAuthentication(req: Request, res: Response): Promise<void> {
         const userInfo = await jwtTokin.Authorization(req)

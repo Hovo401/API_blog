@@ -72,7 +72,6 @@ class UserPostContreoller {
         throw [200, 'Post successfully created', { post }];
     }
     async putUpdatePost(req: Request, res: Response): Promise<void> {
-        console.log(req.headers['content-type']?.includes('multipart/form-data'))
 
         const { userId } = await jwtTokin.Authorization(req);
         if (userId == -1) { throw [400, 'user is not authorized']; }

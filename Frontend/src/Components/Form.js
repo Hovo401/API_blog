@@ -5,7 +5,7 @@ import { baseURL } from '../Moduls/axiosReq.js';
 import form from '../Style/form.css'
 
 
-function Form({ setPanelState }) {
+function Form({ getPostStart, setGetPostStart }) {
     const [textarea, setTextarea] = useState('');
     const [password, setPassword] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
@@ -47,6 +47,7 @@ function Form({ setPanelState }) {
             }
         }).then((response) => {
                 setTextarea('')
+                setGetPostStart(getPostStart);
         })
     }
 }

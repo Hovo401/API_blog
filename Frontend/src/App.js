@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Header from './Components/Header.js';
-import Form from './Components/Form.js';
 import PostList from './Components/PostList/PostList.js';
 import PanelRender from './Components/Panel/PanelRendr.js';
 
@@ -34,7 +33,6 @@ function App() {
             <PanelRender setUserConfig={setUserConfig}  rendringName={panelState} setPanelState={setPanelState} />
             <Header userConfig={userConfig} panelState={panelState} setPanelState={setPanelState}/>
             <main>
-                <Form setPanelState={setPanelState}/>
                 <PostList userConfig={userConfig} setPanelState={setPanelState}/>
                 <></>
             </main>

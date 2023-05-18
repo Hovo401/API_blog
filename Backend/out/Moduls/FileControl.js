@@ -43,10 +43,8 @@ function deleteFolder(folderPath) {
             }
         });
         fs_1.default.rmdirSync(folderPath); // Удалить саму папку
-        console.log(`Папка ${folderPath} успешно удалена.`);
     }
     else {
-        console.log(`Папка ${folderPath} не существует.`);
     }
 }
 exports.deleteFolder = deleteFolder;

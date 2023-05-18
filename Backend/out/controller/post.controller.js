@@ -96,17 +96,16 @@ class UserPostContreoller {
         });
     }
     putUpdatePost(req, res) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d;
         return __awaiter(this, void 0, void 0, function* () {
-            console.log((_a = req.headers['content-type']) === null || _a === void 0 ? void 0 : _a.includes('multipart/form-data'));
             const { userId } = yield jwt_token_modul_1.default.Authorization(req);
             if (userId == -1) {
                 throw [400, 'user is not authorized'];
             }
             let message = '';
             let media_message = '';
-            if ((_b = req.headers['content-type']) === null || _b === void 0 ? void 0 : _b.includes('multipart/form-data')) {
-                message = JSON.parse((_c = req.body) === null || _c === void 0 ? void 0 : _c.data).message;
+            if ((_a = req.headers['content-type']) === null || _a === void 0 ? void 0 : _a.includes('multipart/form-data')) {
+                message = JSON.parse((_b = req.body) === null || _b === void 0 ? void 0 : _b.data).message;
             }
             else {
                 message = req.body.message;
@@ -121,9 +120,9 @@ class UserPostContreoller {
                 throw [403, `you can't delete someone else's post `];
             }
             let newPost;
-            if ((_d = req.headers['content-type']) === null || _d === void 0 ? void 0 : _d.includes('multipart/form-data'), req.file) {
+            if ((_c = req.headers['content-type']) === null || _c === void 0 ? void 0 : _c.includes('multipart/form-data'), req.file) {
                 (0, FileControl_1.deleteFolder)(path_1.default.join('public', String(userId), String(req_post_id)));
-                media_message = yield (0, FileControl_1.addPostMedia)(req.file, userId, (_e = old_post[0]) === null || _e === void 0 ? void 0 : _e.post_id);
+                media_message = yield (0, FileControl_1.addPostMedia)(req.file, userId, (_d = old_post[0]) === null || _d === void 0 ? void 0 : _d.post_id);
                 newPost = yield posts_bd_controller_1.default.updatePost({ post_id, media_message, message });
             }
             else {
